@@ -46,6 +46,7 @@ class monitor extends external_api {
         foreach ($tasks as $task) {
             $rhett[] = [
                 'component' => $task->get_component(),
+                'class' => get_class($task),
                 'lastruntime' => $task->get_last_run_time(),
                 'disabled' => $task->get_disabled(),
             ];
@@ -66,7 +67,8 @@ class monitor extends external_api {
     public static function get_scheduled_tasks_returns() : external_description {
         return new external_multiple_structure(
             new external_single_structure([
-                'component' => new external_value(PARAM_TEXT, 'Task Name', VALUE_REQUIRED),
+                'component' => new external_value(PARAM_TEXT, 'Task Component', VALUE_REQUIRED),
+                'class' => new external_value(PARAM_TEXT, 'Task Class', VALUE_REQUIRED),
                 'lastruntime' => new external_value(PARAM_INT, 'Last Run Time', VALUE_REQUIRED),
                 'disabled' => new external_value(PARAM_BOOL, 'Disabled', VALUE_REQUIRED)
             ])
