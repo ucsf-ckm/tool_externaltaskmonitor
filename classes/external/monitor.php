@@ -10,18 +10,21 @@ namespace tool_externaltaskmonitor\external;
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot . '/lib/externallib.php');
+
 use context_system;
 use core\task\manager;
 use dml_exception;
-use external_api;
-use external_description;
-use external_function_parameters;
-use external_single_structure;
-use external_multiple_structure;
-use external_value;
+use core_external\external_api;
+use core_external\external_description;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
+use core_external\external_multiple_structure;
+use core_external\external_value;
+use core_external\restricted_context_exception;
 use invalid_parameter_exception;
 use required_capability_exception;
-use restricted_context_exception;
+
 
 /**
  * Web Service functions for external task monitor.
@@ -35,7 +38,7 @@ class monitor extends external_api {
      * @throws invalid_parameter_exception
      * @throws restricted_context_exception
      */
-    public static function get_scheduled_tasks() : array {
+    public static function get_scheduled_tasks(): array {
         $context = context_system::instance();
         self::validate_context($context);
         require_capability('moodle/site:config', $context);
@@ -57,14 +60,14 @@ class monitor extends external_api {
     /**
      * @return external_function_parameters
      */
-    public static function get_scheduled_tasks_parameters() : external_function_parameters {
+    public static function get_scheduled_tasks_parameters(): external_function_parameters {
          return new external_function_parameters([]);
     }
 
     /**
      * @return external_description
      */
-    public static function get_scheduled_tasks_returns() : external_description {
+    public static function get_scheduled_tasks_returns(): external_description {
         return new external_multiple_structure(
             new external_single_structure([
                 'component' => new external_value(PARAM_TEXT, 'Task Component', VALUE_REQUIRED),
