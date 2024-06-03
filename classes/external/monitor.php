@@ -1,9 +1,25 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Web Service functions for tool_externaltaskmonitor.
+ * Web service functions for the tool_externaltaskmonitor plugin.
  *
- * @package tool_externaltaskmonitor
+ * @package    tool_externaltaskmonitor
+ * @copyright  The Regents of the University of California
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace tool_externaltaskmonitor\external;
@@ -25,14 +41,17 @@ use core_external\restricted_context_exception;
 use invalid_parameter_exception;
 use required_capability_exception;
 
-
 /**
  * Web Service functions for external task monitor.
  */
 class monitor extends external_api {
 
     /**
-     * @return array
+     * Implements the "tool_externaltaskmonitor_get_scheduled_tasks" web service endpoint.
+     * Returns metadata about each scheduled tasks configured in this Moodle instance.
+     * Each metadata item including the name, classname, status, and last-run timestamp of each scheduled task.
+     *
+     * @return array A list of medata for schedule tasks.
      * @throws dml_exception
      * @throws required_capability_exception
      * @throws invalid_parameter_exception
@@ -58,14 +77,17 @@ class monitor extends external_api {
     }
 
     /**
-     * @return external_function_parameters
+     * Defines the input parameters for the "tool_externaltaskmonitor_get_scheduled_tasks" web service endpoint.
+
+     * @return external_function_parameters The parameter definition.
      */
     public static function get_scheduled_tasks_parameters(): external_function_parameters {
          return new external_function_parameters([]);
     }
 
     /**
-     * @return external_description
+     * Defines the output structure for the "tool_externaltaskmonitor_get_scheduled_tasks" web service endpoint.
+     * @return external_description The output structure definition.
      */
     public static function get_scheduled_tasks_returns(): external_description {
         return new external_multiple_structure(
@@ -73,7 +95,7 @@ class monitor extends external_api {
                 'component' => new external_value(PARAM_TEXT, 'Task Component', VALUE_REQUIRED),
                 'class' => new external_value(PARAM_TEXT, 'Task Class', VALUE_REQUIRED),
                 'lastruntime' => new external_value(PARAM_INT, 'Last Run Time', VALUE_REQUIRED),
-                'disabled' => new external_value(PARAM_BOOL, 'Disabled', VALUE_REQUIRED)
+                'disabled' => new external_value(PARAM_BOOL, 'Disabled', VALUE_REQUIRED),
             ])
         );
     }
