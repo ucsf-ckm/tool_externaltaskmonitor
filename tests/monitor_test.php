@@ -138,6 +138,8 @@ final class monitor_test extends externallib_advanced_testcase {
             monitor::get_scheduled_tasks()
         );
         $taskinfo = $this->find_scheduled_task_in_output($tasksinfo, $classname);
+        $this->assertEquals($taskrecord->component, $taskinfo['component']);
+        $this->assertEquals($classname, $taskinfo['class']);
         $this->assertEquals(0, $taskinfo['lastruntime']);
         $this->assertTrue($taskinfo['disabled']);
 
