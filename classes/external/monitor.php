@@ -24,10 +24,6 @@
 
 namespace tool_externaltaskmonitor\external;
 
-defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->dirroot . '/lib/externallib.php');
-
 use context_system;
 use core\task\manager;
 use dml_exception;
